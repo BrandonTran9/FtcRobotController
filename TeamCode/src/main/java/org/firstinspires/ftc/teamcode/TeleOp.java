@@ -26,6 +26,7 @@ public class teleop extends OpMode {
 
     @Override
     public void loop() {
+        //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
             BR.setPower(gamepad1.right_stick_y * 1);
@@ -51,10 +52,59 @@ public class teleop extends OpMode {
             BL.setPower(0);
             FL.setPower(0);
         }
+        if (gamepad1.left_bumper) {
+            FR.setPower(-1);
+            BR.setPower(1);
+            BL.setPower(1);
+            FL.setPower(-1);
+        } else {
+            FR.setPower(0);
+            BR.setPower(0);
+            BL.setPower(0);
+            FL.setPower(0);
+        }
+        //Arm and lift
         if (Math.abs(gamepad2.right_stick_y) > .2) {
             arm.setPower(1);
         } else {
             arm.setPower(0);
+        }
+        if (Math.abs(gamepad2.right_stick_x) > .2) {
+            lift.setPower(1) ;
+        }else {
+            lift.setPower(0);
+        }
+        //Hanging
+        if  (Math.abs(gamepad2.left_stick_y) > .2) {
+            hang.setPower(1);
+            }else {
+            hang.setPower(0);
+        }
+        //intakes
+        if (gamepad2.dpad_up) {
+            SR.setPower(1);
+            SL.setPower(1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
+        }
+        if (gamepad2.dpad_up) {
+            SR.setPower(-1);
+            SL.setPower(-1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
+        }
+        //intake rotater
+        if (gamepad2.dpad_left) {
+            Srotate.setPower(1);
+        } else {
+            Srotate.setPower(0);
+        }
+        if (gamepad2.dpad_right) {
+            Srotate.setPower(-1);
+        } else {
+            Srotate.setPower(0);
         }
     }
 }
