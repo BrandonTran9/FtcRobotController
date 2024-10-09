@@ -5,11 +5,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class testcode extends OpMode {
     DcMotor hanging_arm, hanging;
+
     @Override
     public void init() {
         hanging_arm = hardwareMap.dcMotor.get("hanging_arm");
         hanging = hardwareMap.dcMotor.get("hanging");
     }
+
     @Override
     public void loop() {
 
@@ -23,5 +25,6 @@ public class testcode extends OpMode {
             hanging.setPower(-1);
         } else {
             hanging.setPower(0);
+        }
     }
 }

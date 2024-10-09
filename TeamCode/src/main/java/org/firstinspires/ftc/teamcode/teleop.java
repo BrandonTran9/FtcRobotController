@@ -77,7 +77,7 @@ public class teleop extends OpMode {
         //Hanging
         if  (Math.abs(gamepad2.left_stick_y) > .2) {
             hang.setPower(1);
-            }else {
+        }else {
             hang.setPower(0);
         }
         //intakes
