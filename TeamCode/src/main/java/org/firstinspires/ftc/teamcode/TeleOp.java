@@ -6,74 +6,105 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
-public class TeleOp extends OpMode {
-    DcMotor lf, lb, rf, rb, intakeMotor, hangingMotor;
-    CRServo drone;
+public class teleop extends OpMode {
+    DcMotor arm, hang, lift, FR, FL, BL, BR;
+    CRServo SL, SR, Srotate;
+
     @Override
     public void init() {
-        lf = hardwareMap.dcMotor.get("lf");
-        lb = hardwareMap.dcMotor.get("lb");
-        rf = hardwareMap.dcMotor.get("rf");
-        rb = hardwareMap.dcMotor.get("rb");
-        intakeMotor = hardwareMap.dcMotor.get("intake");
-        hangingMotor = hardwareMap.dcMotor.get("hanging");
-        drone = hardwareMap.crservo.get("drone");
-        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BR = hardwareMap.dcMotor.get("BR");
+        BL = hardwareMap.dcMotor.get("BL");
+        FR = hardwareMap.dcMotor.get("FR");
+        FL = hardwareMap.dcMotor.get("FL");
+        arm = hardwareMap.dcMotor.get("arm");
+        hang = hardwareMap.dcMotor.get("hang");
+        lift = hardwareMap.dcMotor.get("lift");
+        SL = hardwareMap.crservo.get("SL");
+        SR = hardwareMap.crservo.get("SR");
+        Srotate = hardwareMap.crservo.get("Srotate");
     }
+
     @Override
     public void loop() {
-        if (Math.abs(-gamepad1.right_stick_y) > .2) {
-            rf.setPower(-gamepad1.right_stick_y * 1);
-            rb.setPower(-gamepad1.right_stick_y * 1);
+        //Base movements
+        if (Math.abs(gamepad1.right_stick_y) > .2) {
+            FR.setPower(gamepad1.right_stick_y * 1);
+            BR.setPower(gamepad1.right_stick_y * 1);
         } else {
-            rb.setPower(0);
-            rf.setPower(0);
+            BR.setPower(0);
+            FR.setPower(0);
         }
         if (Math.abs(gamepad1.left_stick_y) > .2) {
-            lf.setPower(gamepad1.left_stick_y * 1);
-            lb.setPower(-gamepad1.left_stick_y * 1);
+            FL.setPower(gamepad1.left_stick_y * 1);
+            BR.setPower(gamepad1.left_stick_y * 1);
         } else {
-            lf.setPower(0);
-            lb.setPower(0);
+            BL.setPower(0);
+            FL.setPower(0);
         }
-        if (gamepad2.a) {
-            intakeMotor.setPower(1);
+        if (gamepad1.right_bumper) {
+            FR.setPower(1);
+            BR.setPower(-1);
+            BL.setPower(-1);
+            FL.setPower(1);
         } else {
-            intakeMotor.setPower(0);
+            FR.setPower(0);
+            BR.setPower(0);
+            BL.setPower(0);
+            FL.setPower(0);
         }
-
-        if (gamepad2.b) {
-            intakeMotor.setPower(-1);
+        if (gamepad1.left_bumper) {
+            FR.setPower(-1);
+            BR.setPower(1);
+            BL.setPower(1);
+            FL.setPower(-1);
         } else {
-            intakeMotor.setPower(0);
+            FR.setPower(0);
+            BR.setPower(0);
+            BL.setPower(0);
+            FL.setPower(0);
         }
-
-        if (gamepad2.x) {
-            drone.setPower(1);
+        //Arm and lift
+        if (Math.abs(gamepad2.right_stick_y) > .2) {
+            arm.setPower(1);
         } else {
-            drone.setPower(0);
+            arm.setPower(0);
         }
-
-        if (gamepad2.y) {
-            drone.setPower(-1);
-        } else {
-            drone.setPower(0);
+        if (Math.abs(gamepad2.right_stick_x) > .2) {
+            lift.setPower(1) ;
+        }else {
+            lift.setPower(0);
         }
-
+        //Hanging
+        if  (Math.abs(gamepad2.left_stick_y) > .2) {
+            hang.setPower(1);
+            }else {
+            hang.setPower(0);
+        }
+        //intakes
         if (gamepad2.dpad_up) {
-            hangingMotor.setPower(1);
-        } else {
-            hangingMotor.setPower(0);
+            SR.setPower(1);
+            SL.setPower(1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
         }
-
-        if (gamepad2.dpad_down) {
-            hangingMotor.setPower(-1);
-        } else {
-            hangingMotor.setPower(0);
+        if (gamepad2.dpad_up) {
+            SR.setPower(-1);
+            SL.setPower(-1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
         }
-
+        //intake rotater
+        if (gamepad2.dpad_left) {
+            Srotate.setPower(1);
+        } else {
+            Srotate.setPower(0);
+        }
+        if (gamepad2.dpad_right) {
+            Srotate.setPower(-1);
+        } else {
+            Srotate.setPower(0);
+        }
     }
 }
