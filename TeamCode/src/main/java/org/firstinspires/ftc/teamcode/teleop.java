@@ -29,23 +29,23 @@ public class teleop extends OpMode {
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
-            BR.setPower(gamepad1.right_stick_y * 1);
+            BR.setPower(gamepad1.right_stick_y * -1);
         } else {
             BR.setPower(0);
             FR.setPower(0);
         }
         if (Math.abs(gamepad1.left_stick_y) > .2) {
-            FL.setPower(gamepad1.left_stick_y * 1);
-            BR.setPower(gamepad1.left_stick_y * 1);
+            FL.setPower(gamepad1.left_stick_y * -1);
+            BL.setPower(gamepad1.left_stick_y * 1);
         } else {
-            BL.setPower(0);
             FL.setPower(0);
+            BL.setPower(0);
         }
         if (gamepad1.right_bumper) {
             FR.setPower(1);
-            BR.setPower(-1);
+            BR.setPower(1);
             BL.setPower(-1);
-            FL.setPower(1);
+            FL.setPower(-1);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -54,9 +54,9 @@ public class teleop extends OpMode {
         }
         if (gamepad1.left_bumper) {
             FR.setPower(-1);
-            BR.setPower(1);
+            BR.setPower(-1);
             BL.setPower(1);
-            FL.setPower(-1);
+            FL.setPower(1);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -64,13 +64,14 @@ public class teleop extends OpMode {
             FL.setPower(0);
         }
         //Arm and lift
-        if (Math.abs(gamepad2.right_stick_y) > .2) {
+        if (Math.abs(gamepad2.right_stick_x) > .2) {
             arm.setPower(1);
         } else {
             arm.setPower(0);
         }
-        if (Math.abs(gamepad2.right_stick_x) > .2) {
-            lift.setPower(1) ;
+        if (Math.abs(gamepad2.right_stick_y) > .2) {
+            lift.setPower(gamepad1.right_stick_y * 1);
+            lift.setPower(gamepad1.right_stick_y * -1);
         }else {
             lift.setPower(0);
         }
