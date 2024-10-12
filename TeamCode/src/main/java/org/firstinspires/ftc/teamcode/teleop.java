@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
 public class teleop extends OpMode {
-    DcMotor arm, hang, lift, FR, FL, BL, BR;
+    DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
     CRServo SL, SR, Srotate;
 
     @Override
@@ -17,8 +17,9 @@ public class teleop extends OpMode {
         FR = hardwareMap.dcMotor.get("FR");
         FL = hardwareMap.dcMotor.get("FL");
         arm = hardwareMap.dcMotor.get("arm");
-        hang = hardwareMap.dcMotor.get("hang");
+        arm2 = hardwareMap.dcMotor.get("arm2");
         lift = hardwareMap.dcMotor.get("lift");
+        hang = hardwareMap.dcMotor.get("hang");
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
@@ -63,34 +64,53 @@ public class teleop extends OpMode {
             BL.setPower(0);
             FL.setPower(0);
         }
-        //Arm and lift
-        if (Math.abs(gamepad2.right_stick_x) > .2) {
+        //Arm
+        if (gamepad2.x) {
             arm.setPower(1);
+            arm2.setPower(-1);
         } else {
             arm.setPower(0);
+            arm2.setPower(0);
         }
-        if (Math.abs(gamepad2.right_stick_y) > .2) {
-            lift.setPower(gamepad1.right_stick_y * 1);
-            lift.setPower(gamepad1.right_stick_y * -1);
+        if (gamepad2.b) {
+            arm.setPower(-1);
+            arm2.setPower(1);
+        } else {
+            arm.setPower(0);
+            arm2.setPower(0);
+        }
+       //lift
+        if (gamepad2.y) {
+            lift.setPower(-1);
         }else {
             lift.setPower(0);
         }
-        //Hanging
-        if  (Math.abs(gamepad2.left_stick_y) > .2) {
+        if (gamepad2.a) {
+            lift.setPower(1);
+        }else {
+            lift.setPower(0);
+        }
+        //hang
+        if (gamepad1.dpad_up) {
+            hang.setPower(-1);
+        }else {
+            hang.setPower(0);
+        }
+        if (gamepad1.dpad_down) {
             hang.setPower(1);
         }else {
             hang.setPower(0);
         }
         //intakes
         if (gamepad2.dpad_up) {
-            SR.setPower(1);
+            SR.setPower(-1);
             SL.setPower(1);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
-        if (gamepad2.dpad_up) {
-            SR.setPower(-1);
+        if (gamepad2.dpad_down) {
+            SR.setPower(1);
             SL.setPower(-1);
         }else {
             SR.setPower(0);
