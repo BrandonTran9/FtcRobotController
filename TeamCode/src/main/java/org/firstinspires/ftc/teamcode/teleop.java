@@ -43,10 +43,10 @@ public class teleop extends OpMode {
             BL.setPower(0);
         }
         if (gamepad1.right_bumper) {
-            FR.setPower(1);
-            BR.setPower(1);
-            BL.setPower(-1);
-            FL.setPower(-1);
+            FR.setPower(2);
+            BR.setPower(2);
+            BL.setPower(-2);
+            FL.setPower(-2);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -54,10 +54,10 @@ public class teleop extends OpMode {
             FL.setPower(0);
         }
         if (gamepad1.left_bumper) {
-            FR.setPower(-1);
-            BR.setPower(-1);
-            BL.setPower(1);
-            FL.setPower(1);
+            FR.setPower(-2);
+            BR.setPower(-2);
+            BL.setPower(2);
+            FL.setPower(2);
         } else {
             FR.setPower(0);
             BR.setPower(0);
