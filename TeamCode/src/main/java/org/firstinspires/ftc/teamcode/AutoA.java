@@ -33,11 +33,9 @@ public class AutoA extends LinearOpMode {
             hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             waitForStart();
-            FR.setPower(-0.35);
-            FL.setPower(-0.35);
-            BR.setPower(0.35);
-            BL.setPower(0.35);
 
+            telemetry.addData("Path", "Complete");
+            telemetry.update();
             sleep(30000);
         }
     }

@@ -8,8 +8,9 @@ public class testcode extends OpMode {
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
     @Override
     public void init() {
-        hanging_arm = hardwareMap.dcMotor.get("hanging_arm");
-        hanging = hardwareMap.dcMotor.get("hanging");
+        arm = hardwareMap.dcMotor.get("arm");
+        arm2 = hardwareMap.dcMotor.get("arm2");
+        hang = hardwareMap.dcMotor.get("hang");
     }
 
     @Override
