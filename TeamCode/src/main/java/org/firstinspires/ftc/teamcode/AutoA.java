@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@Autonomous
 public class AutoA extends LinearOpMode {
     DcMotor FR, FL, BL, BR, lift, arm, arm2, hang;
     CRServo SL, SR, Srotate;
@@ -33,10 +35,14 @@ public class AutoA extends LinearOpMode {
             hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             waitForStart();
+            FR.setPower(-0.5);
+            FL.setPower(0.5);
+            BR.setPower(0.5);
+            BL.setPower(-0.5);
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
-            sleep(30000);
+            sleep(2200);
         }
     }
 }
