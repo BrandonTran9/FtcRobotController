@@ -41,8 +41,13 @@ public class AutoA extends LinearOpMode {
             BL.setPower(-0.5);
 
             telemetry.addData("Path", "Complete");
-            telemetry.update();
-            sleep(2200);
+            telemetry.update();;
+
+            FR.setPower(-0.5);
+            FL.setPower(0.5);
+            BR.setPower(0.5);
+            BL.setPower(-0.5);
+            sleep(1000);
         }
     }
 }

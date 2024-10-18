@@ -45,8 +45,8 @@ public class teleop extends OpMode {
         if (gamepad1.right_bumper) {
             FR.setPower(2);
             BR.setPower(2);
-            BL.setPower(-2);
-            FL.setPower(-2);
+            BL.setPower(2);
+            FL.setPower(2);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -56,8 +56,8 @@ public class teleop extends OpMode {
         if (gamepad1.left_bumper) {
             FR.setPower(-2);
             BR.setPower(-2);
-            BL.setPower(2);
-            FL.setPower(2);
+            BL.setPower(-2);
+            FL.setPower(-2);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -65,17 +65,12 @@ public class teleop extends OpMode {
             FL.setPower(0);
         }
         //Arm
-        if (gamepad2.x) {
-            arm.setPower(1);
-            arm2.setPower(-1);
+        if (Math.abs(gamepad2.right_stick_y) > .2) {
+            arm.setPower(gamepad2.right_stick_y * -0.5);
+            arm2.setPower(gamepad2.right_stick_y * 0.5);
         } else {
-            arm.setPower(0);
-            arm2.setPower(0);
-        }
-        if (gamepad2.b) {
-            arm.setPower(-1);
-            arm2.setPower(1);
-        } else {
+            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
             arm2.setPower(0);
         }
@@ -103,15 +98,15 @@ public class teleop extends OpMode {
         }
         //intakes
         if (gamepad2.dpad_up) {
-            SR.setPower(-1);
-            SL.setPower(1);
+            SR.setPower(1);
+            SL.setPower(-1);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
         if (gamepad2.dpad_down) {
-            SR.setPower(1);
-            SL.setPower(-1);
+            SR.setPower(-1);
+            SL.setPower(1);
         }else {
             SR.setPower(0);
             SL.setPower(0);
