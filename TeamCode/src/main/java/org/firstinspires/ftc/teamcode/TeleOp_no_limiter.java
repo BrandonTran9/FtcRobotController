@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
-public class teleop extends OpMode {
+public class TeleOp_no_limiter extends OpMode {
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 7.55906 ;     // For figuring circumference
@@ -36,9 +36,9 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
 
-          int liftEncoders = Math.abs(lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
+        int liftEncoders = Math.abs(lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
 
-         // liftEncoders = 0;
+        // liftEncoders = 0;
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
@@ -86,21 +86,17 @@ public class teleop extends OpMode {
             arm.setPower(0);
             arm2.setPower(0);
         }
-     //lift with limiter
-        if (liftEncoders >= 1000) { //number = Inches
+        //lift without limiter
             if (gamepad2.a) {
                 lift.setPower(-1);
             }
-        else if (gamepad2.y) {
-            lift.setPower(1);
-        } else {
-            lift.setPower(0);
+            else if (gamepad2.y) {
+                lift.setPower(1);
+            } else {
+                lift.setPower(0);
             }
-        } else if (liftEncoders <= 11001) { //otherwise bring it back down
-            lift.setPower(1);
-        }
         telemetry.addData( "Lift position", lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
-        
+
         //hang
         if (gamepad1.dpad_up) {
             hang.setPower(-1);
