@@ -42,7 +42,7 @@ public class AutoB extends LinearOpMode {
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
-            sleep(2200);
+            sleep(5000);
         }
     }
 }
