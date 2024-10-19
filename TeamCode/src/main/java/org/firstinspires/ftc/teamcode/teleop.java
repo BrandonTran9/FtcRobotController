@@ -95,7 +95,7 @@ public class teleop extends OpMode {
             }
         } else {
             lift.setPower(1);
-        }
+        } // end of limiter
         if (gamepad2.a) {
             lift.setPower(1);
         } else {
