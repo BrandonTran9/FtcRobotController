@@ -36,7 +36,7 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
 
-          int liftEncoders = Math.abs(lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
+          int liftEncoders = (lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
 
          // liftEncoders = 0;
         //Base movements
@@ -87,18 +87,21 @@ public class teleop extends OpMode {
             arm2.setPower(0);
         }
      //lift with limiter
-        if (liftEncoders >= 1000) { //number = Inches
-            if (gamepad2.a) {
+        if (liftEncoders <= 800 && liftEncoders >= -11001) { //number = Raw Values
+            if (gamepad2.y) {
                 lift.setPower(-1);
+            } else {
+                lift.setPower(0);
             }
-        else if (gamepad2.y) {
+        } else {
+            lift.setPower(1);
+        }
+        if (gamepad2.a) {
             lift.setPower(1);
         } else {
             lift.setPower(0);
-            }
-        } else if (liftEncoders <= 11001) { //otherwise bring it back down
-            lift.setPower(1);
         }
+
         telemetry.addData( "Lift position", lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
         
         //hang

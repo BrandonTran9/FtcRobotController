@@ -88,10 +88,10 @@ public class TeleOp_no_limiter extends OpMode {
         }
         //lift without limiter
             if (gamepad2.a) {
-                lift.setPower(-1);
+                lift.setPower(1);
             }
             else if (gamepad2.y) {
-                lift.setPower(1);
+                lift.setPower(-1);
             } else {
                 lift.setPower(0);
             }
