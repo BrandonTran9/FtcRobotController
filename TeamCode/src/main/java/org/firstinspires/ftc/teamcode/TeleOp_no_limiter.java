@@ -78,8 +78,8 @@ public class TeleOp_no_limiter extends OpMode {
         }
         //Arm
         if (Math.abs(gamepad2.right_stick_y) > .2) {
-            arm.setPower(gamepad2.right_stick_y * -0.5);
-            arm2.setPower(gamepad2.right_stick_y * 0.5);
+            arm.setPower(gamepad2.right_stick_y * -0.4);
+            arm2.setPower(gamepad2.right_stick_y * 0.4);
         } else {
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -124,15 +124,15 @@ public class TeleOp_no_limiter extends OpMode {
             SL.setPower(0);
         }
         //intake rotater
-        if (gamepad2.dpad_left) {
+        if (gamepad2.dpad_right) {
             Srotate.setPower(1);
         } else {
-            Srotate.setPower(0);
+            Srotate.setPower(0.0000001);
         }
-        if (gamepad2.dpad_right) {
+        if (gamepad2.dpad_left) {
             Srotate.setPower(-1);
         } else {
-            Srotate.setPower(0);
+            Srotate.setPower(-0.0000001);
         }
     }
 }

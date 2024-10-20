@@ -35,14 +35,14 @@ public class AutoB extends LinearOpMode {
             hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             waitForStart();
-            FR.setPower(-0.5);
-            FL.setPower(0.5);
-            BR.setPower(0.5);
-            BL.setPower(-0.5);
+            FR.setPower(0.5);
+            FL.setPower(-0.5);
+            BR.setPower(-0.5);
+            BL.setPower(0.5);
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
-            sleep(5000);
+            sleep(2200);
         }
     }
 }

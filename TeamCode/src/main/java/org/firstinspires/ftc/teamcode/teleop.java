@@ -35,10 +35,8 @@ public class teleop extends OpMode {
 
     @Override
     public void loop() {
-
-          int liftEncoders = (lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
-
-         // liftEncoders = 0;
+        int liftEncoders = (lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
+        // liftEncoders = 0;
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
@@ -78,16 +76,21 @@ public class teleop extends OpMode {
         }
         //Arm
         if (Math.abs(gamepad2.right_stick_y) > .2) {
-            arm.setPower(gamepad2.right_stick_y * -0.5);
-            arm2.setPower(gamepad2.right_stick_y * 0.5);
+            arm.setPower(gamepad2.right_stick_y * -0.4);
+            arm2.setPower(gamepad2.right_stick_y * 0.4);
         } else {
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
             arm2.setPower(0);
         }
+        // Send telemetry message to indicate arm position
+        telemetry.addData("Arm position at",  "%7d :%7d :%7d :%7d",
+                arm.getCurrentPosition(),
+                arm2.getCurrentPosition(),
+                lift.getCurrentPosition());
      //lift with limiter
-        if (liftEncoders <= 800 && liftEncoders >= -11001) { //number = Raw Values
+        if (liftEncoders >= -13800) { //number = Raw Values
             if (gamepad2.y) {
                 lift.setPower(-1);
             } else {
@@ -103,7 +106,8 @@ public class teleop extends OpMode {
         }
 
         telemetry.addData( "Lift position", lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
-        
+        telemetry.update();
+
         //hang
         if (gamepad1.dpad_up) {
             hang.setPower(-1);
@@ -131,15 +135,15 @@ public class teleop extends OpMode {
             SL.setPower(0);
         }
         //intake rotater
-        if (gamepad2.dpad_left) {
+        if (gamepad2.b) {
             Srotate.setPower(1);
         } else {
-            Srotate.setPower(0);
+            Srotate.setPower(0.0000001);
         }
-        if (gamepad2.dpad_right) {
+        if (gamepad2.x) {
             Srotate.setPower(-1);
         } else {
-            Srotate.setPower(0);
+            Srotate.setPower(-0.0000001);
         }
     }
 }

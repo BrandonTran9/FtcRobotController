@@ -42,7 +42,7 @@ public class AutoA extends LinearOpMode {
 
             telemetry.addData("Path", "Complete");
             telemetry.update();;
-            sleep(5000);
+            sleep(2200);
         }
     }
 }
