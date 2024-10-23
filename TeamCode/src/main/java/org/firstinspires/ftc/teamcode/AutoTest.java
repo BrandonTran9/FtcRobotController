@@ -126,9 +126,6 @@ public class AutoTest extends LinearOpMode {
         int newFLTarget;
         int newBRTarget;
         int newBLTarget;
-        int newarmTarget;
-        int newarm2Target;
-        int newliftTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
@@ -137,9 +134,6 @@ public class AutoTest extends LinearOpMode {
             newFLTarget = FL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newBRTarget = BR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
             newBLTarget = BL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newarmTarget = arm.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newarm2Target = arm2.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newliftTarget = lift.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             FR.setTargetPosition(newFRTarget);
             FL.setTargetPosition(newFLTarget);
             BR.setTargetPosition(newBRTarget);
@@ -213,8 +207,8 @@ public class AutoTest extends LinearOpMode {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
             // Determine new target position, and pass to motor controller
-            newarmTarget = arm.getCurrentPosition() + (int)(fowardInches * COUNTS_PER_INCH);
-            newarm2Target = arm2.getCurrentPosition() + (int)(reverseInches * COUNTS_PER_INCH);
+            newarmTarget = arm.getCurrentPosition() + (int)(fowardInches);
+            newarm2Target = arm2.getCurrentPosition() + (int)(reverseInches);
             arm.setTargetPosition(newarmTarget);
             arm2.setTargetPosition(newarm2Target);
 

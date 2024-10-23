@@ -100,7 +100,7 @@ public class AutoB extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  -50,  50, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  -40,  40, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
         encoderDrive(DRIVE_SPEED,  -33,  -33, 5.0);
         encoderDrive(DRIVE_SPEED,  -20,  20, 5.0);
         // TEMPORARY COMMENT:encoderStrafe(DRIVE_SPEED, 20, 20, 5.0);  // S2: Strafe Left 12 Inches with 4 Sec timeout
@@ -125,9 +125,6 @@ public class AutoB extends LinearOpMode {
         int newFLTarget;
         int newBRTarget;
         int newBLTarget;
-        int newarmTarget;
-        int newarm2Target;
-        int newliftTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
@@ -136,25 +133,16 @@ public class AutoB extends LinearOpMode {
             newFLTarget = FL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newBRTarget = BR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
             newBLTarget = BL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newarmTarget = arm.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newarm2Target = arm2.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newliftTarget = lift.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             FR.setTargetPosition(newFRTarget);
             FL.setTargetPosition(newFLTarget);
             BR.setTargetPosition(newBRTarget);
             BL.setTargetPosition(newBLTarget);
-            arm.setTargetPosition(newarmTarget);
-            arm2.setTargetPosition(newarm2Target);
-            lift.setTargetPosition(newliftTarget);
 
             // Turn On RUN_TO_POSITION
             FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
@@ -162,9 +150,6 @@ public class AutoB extends LinearOpMode {
             FR.setPower(Math.abs(speed));
             BL.setPower(Math.abs(speed));
             BR.setPower(Math.abs(speed));
-            arm.setPower(Math.abs(speed));
-            arm2.setPower(Math.abs(speed));
-            lift.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -174,12 +159,12 @@ public class AutoB extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (FL.isBusy() && BL.isBusy() && BR.isBusy() && FR.isBusy() && arm.isBusy() && arm2.isBusy() && lift.isBusy())) {
+                    (FL.isBusy() && BL.isBusy() && BR.isBusy() && FR.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newFLTarget,  newFRTarget, newBLTarget, newBRTarget);
                 telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d", newFLTarget, newFRTarget, newBLTarget, newBRTarget,
-                        FL.getCurrentPosition(), FR.getCurrentPosition(), BL.getCurrentPosition(), BR.getCurrentPosition(), arm.getCurrentPosition(), arm2.getCurrentPosition(), lift.getCurrentPosition());
+                        FL.getCurrentPosition(), FR.getCurrentPosition(), BL.getCurrentPosition(), BR.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -188,18 +173,12 @@ public class AutoB extends LinearOpMode {
             FR.setPower(0);
             BL.setPower(0);
             BR.setPower(0);
-            arm.setPower(0);
-            arm2.setPower(0);
-            lift.setPower(0);
 
             // Turn off RUN_TO_POSITION
             FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             sleep(250);   // optional pause after each move.
         }
