@@ -138,18 +138,12 @@ public class AutoTest extends LinearOpMode {
             FL.setTargetPosition(newFLTarget);
             BR.setTargetPosition(newBRTarget);
             BL.setTargetPosition(newBLTarget);
-            arm.setTargetPosition(newarmTarget);
-            arm2.setTargetPosition(newarm2Target);
-            lift.setTargetPosition(newliftTarget);
 
             // Turn On RUN_TO_POSITION
             FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
@@ -157,9 +151,6 @@ public class AutoTest extends LinearOpMode {
             FR.setPower(Math.abs(speed));
             BL.setPower(Math.abs(speed));
             BR.setPower(Math.abs(speed));
-            arm.setPower(Math.abs(speed));
-            arm2.setPower(Math.abs(speed));
-            lift.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -169,12 +160,12 @@ public class AutoTest extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (FL.isBusy() && BL.isBusy() && BR.isBusy() && FR.isBusy() && arm.isBusy() && arm2.isBusy() && lift.isBusy())) {
+                    (FL.isBusy() && BL.isBusy() && BR.isBusy() && FR.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newFLTarget,  newFRTarget, newBLTarget, newBRTarget);
                 telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d", newFLTarget, newFRTarget, newBLTarget, newBRTarget,
-                        FL.getCurrentPosition(), FR.getCurrentPosition(), BL.getCurrentPosition(), BR.getCurrentPosition(), arm.getCurrentPosition(), arm2.getCurrentPosition(), lift.getCurrentPosition());
+                        FL.getCurrentPosition(), FR.getCurrentPosition(), BL.getCurrentPosition(), BR.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -183,18 +174,12 @@ public class AutoTest extends LinearOpMode {
             FR.setPower(0);
             BL.setPower(0);
             BR.setPower(0);
-            arm.setPower(0);
-            arm2.setPower(0);
-            lift.setPower(0);
 
             // Turn off RUN_TO_POSITION
             FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             sleep(250);   // optional pause after each move.
         }
