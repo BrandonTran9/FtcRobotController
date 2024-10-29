@@ -85,7 +85,7 @@ public class teleop extends OpMode {
             arm2.setPower(0);
         }
         // Send telemetry message to indicate arm position
-        telemetry.addData("Arm position at",  "%7d :%7d :%7d :%7d",
+        telemetry.addData("Arm position at",  "%7d :%7d :%7d",
                 arm.getCurrentPosition(),
                 arm2.getCurrentPosition(),
                 lift.getCurrentPosition());
@@ -105,7 +105,7 @@ public class teleop extends OpMode {
             lift.setPower(0);
         }
 
-        telemetry.addData( "Lift position", lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
+        telemetry.addData( "Lift position", "%7d",lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
         telemetry.update();
 
         //hang

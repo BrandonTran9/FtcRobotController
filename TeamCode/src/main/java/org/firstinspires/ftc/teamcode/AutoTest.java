@@ -100,9 +100,9 @@ public class AutoTest extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  -72,  72, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED,  -33,  -33, 5.0);
-        encoderDrive(DRIVE_SPEED,  -20,  20, 5.0);
+        encoderDrive(DRIVE_SPEED,  -63,  63, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  -23,  -23, 5.0);
+        encoderDrive(DRIVE_SPEED,  -14,  14, 5.0);
         encoderarm(ARM_SPEED, 50,50,5.0);
         // TEMPORARY COMMENT:encoderStrafe(DRIVE_SPEED, 20, 20, 5.0);  // S2: Strafe Left 12 Inches with 4 Sec timeout
         // TEMPORARY COMMENT:encoderDrive(DRIVE_SPEED, 5, 5, 5.0); // S3: Reverse 10 Inches with 5 Sec timeout
@@ -192,8 +192,8 @@ public class AutoTest extends LinearOpMode {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
             // Determine new target position, and pass to motor controller
-            newarmTarget = arm.getCurrentPosition() + (int)(fowardInches);
-            newarm2Target = arm2.getCurrentPosition() + (int)(reverseInches);
+            newarmTarget = arm.getCurrentPosition() + (int)(fowardInches * COUNTS_PER_INCH);
+            newarm2Target = arm2.getCurrentPosition() + (int)(reverseInches * COUNTS_PER_INCH);
             arm.setTargetPosition(newarmTarget);
             arm2.setTargetPosition(newarm2Target);
 
