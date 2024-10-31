@@ -85,7 +85,7 @@ public class AutoTest extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d",
+        telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d :%7d :%7d",
                 FR.getCurrentPosition(),
                 FL.getCurrentPosition(),
                 BR.getCurrentPosition(),
@@ -101,7 +101,7 @@ public class AutoTest extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  -63,  63, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED,  -23,  -23, 5.0);
+        encoderDrive(DRIVE_SPEED,  -24,  -24, 5.0);
         encoderDrive(DRIVE_SPEED,  -14,  14, 5.0);
         encoderarm(ARM_SPEED, 50,50,5.0);
         // TEMPORARY COMMENT:encoderStrafe(DRIVE_SPEED, 20, 20, 5.0);  // S2: Strafe Left 12 Inches with 4 Sec timeout
@@ -212,13 +212,11 @@ public class AutoTest extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (arm.isBusy() && arm2.isBusy())) {
+            while (opModeIsActive() && (runtime.seconds() < timeoutS) && (arm.isBusy() && arm2.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newarmTarget, newarm2Target);
-                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d", newarmTarget, newarm2Target,
+                telemetry.addData("Running to",  " %7d :%7d", newarmTarget, newarm2Target);
+                telemetry.addData("Currently at",  " at %7d :%7d", newarmTarget, newarm2Target,
                         arm.getCurrentPosition(), arm2.getCurrentPosition());
                 telemetry.update();
             }
