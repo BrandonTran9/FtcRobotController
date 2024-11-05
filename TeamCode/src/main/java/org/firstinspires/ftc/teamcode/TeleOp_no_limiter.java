@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
 public class TeleOp_no_limiter extends OpMode {
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 7.55906 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -31,12 +31,8 @@ public class TeleOp_no_limiter extends OpMode {
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
     }
-
-
     @Override
     public void loop() {
-
-        int liftEncoders = Math.abs(lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
 
         // liftEncoders = 0;
         //Base movements

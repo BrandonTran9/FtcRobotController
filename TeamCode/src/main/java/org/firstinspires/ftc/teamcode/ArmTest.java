@@ -29,14 +29,13 @@ public class ArmTest extends LinearOpMode {
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d",
+        telemetry.addData("Starting at",  "%7d :%7d",
                 arm.getCurrentPosition(),
                 arm2.getCurrentPosition());
         telemetry.update();
-
         waitForStart();
 
-        encoderarm(ARM_SPEED, 50,50,5.0);
+        encoderarm(ARM_SPEED, 500,500,5.0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
