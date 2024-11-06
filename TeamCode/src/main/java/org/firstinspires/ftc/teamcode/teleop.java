@@ -15,7 +15,7 @@ public class teleop extends OpMode {
 
 
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
-    CRServo SL, SR, Srotate;
+    CRServo SL, SR, Srotate, Srotate2;
 
     @Override
     public void init() {
@@ -30,6 +30,7 @@ public class teleop extends OpMode {
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
+        Srotate2 = hardwareMap.crservo.get("Srotate2");
     }
 
 
@@ -91,18 +92,26 @@ public class teleop extends OpMode {
                 lift.getCurrentPosition());
      //lift with limiter
         if (liftEncoders >= -13800) { //number = Raw Values
-            if (gamepad2.y) {
-                lift.setPower(-1);
+            if (Math.abs(gamepad2.left_stick_y) >.2) {
+                lift.setPower(.5);
             } else {
-                lift.setPower(0);
+                lift.setPower(0.5);
+                lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
         } else {
-            lift.setPower(1);
+            lift.setPower(0);
         } // end of limiter
-        if (gamepad2.a) {
-            lift.setPower(1);
+        if (Math.abs(gamepad2.left_stick_y) > .2) {
+            lift.setPower(.5);
         } else {
             lift.setPower(0);
+            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+        if (Math.abs(gamepad2.left_stick_y) > .2) {
+            lift.setPower(.5);
+        } else {
+            lift.setPower(0);
+            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
         telemetry.addData( "Lift position", "%7d",lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
@@ -121,15 +130,15 @@ public class teleop extends OpMode {
         }
         //intakes
         if (gamepad2.dpad_up) {
-            SR.setPower(1);
-            SL.setPower(-1);
+            SR.setPower(-1);
+            SL.setPower(1);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
         if (gamepad2.dpad_down) {
-            SR.setPower(-1);
-            SL.setPower(1);
+            SR.setPower(1);
+            SL.setPower(-1);
         }else {
             SR.setPower(0);
             SL.setPower(0);
@@ -137,13 +146,17 @@ public class teleop extends OpMode {
         //intake rotater
         if (gamepad2.b) {
             Srotate.setPower(1);
+            Srotate2.setPower(-1);
         } else {
-            Srotate.setPower(0.0000001);
+            Srotate.setPower(0.0000);
+            Srotate2.setPower(-0.0000);
         }
         if (gamepad2.x) {
             Srotate.setPower(-1);
+            Srotate2.setPower(1);
         } else {
-            Srotate.setPower(-0.0000001);
+            Srotate.setPower(-0.0000);
+            Srotate2.setPower(0.0000);
         }
     }
 }
