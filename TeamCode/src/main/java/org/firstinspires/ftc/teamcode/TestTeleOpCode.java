@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
-public class testcode extends OpMode {
+public class TestTeleOpCode extends OpMode {
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
     CRServo SL, SR, Srotate;
 
