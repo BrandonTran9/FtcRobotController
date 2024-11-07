@@ -107,6 +107,7 @@ public class AutoC extends LinearOpMode {
         encoderDrive(DRIVE_SPEED,  -14,  14, 5.0);
         encoderarm(ARM_SPEED, 50,-50,5.0);
         encoderlift(LIFT_SPEED, 300,300,5.0);
+        encoderlift(LIFT_SPEED, -300,-300,5.0);
         // TEMPORARY COMMENT:encoderStrafe(DRIVE_SPEED, 20, 20, 5.0);  // S2: Strafe Left 12 Inches with 4 Sec timeout
         // TEMPORARY COMMENT:encoderDrive(DRIVE_SPEED, 5, 5, 5.0); // S3: Reverse 10 Inches with 5 Sec timeout
 
