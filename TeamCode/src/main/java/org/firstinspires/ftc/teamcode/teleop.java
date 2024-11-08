@@ -37,7 +37,7 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
         int liftEncoders = (lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
-        // liftEncoders = 0;
+        liftEncoders = 0;
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
@@ -54,10 +54,10 @@ public class teleop extends OpMode {
             BL.setPower(0);
         }
         if (gamepad1.right_bumper) {
-            FR.setPower(2);
-            BR.setPower(2);
-            BL.setPower(2);
-            FL.setPower(2);
+            FR.setPower(1);
+            BR.setPower(1);
+            BL.setPower(1);
+            FL.setPower(1);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -65,10 +65,10 @@ public class teleop extends OpMode {
             FL.setPower(0);
         }
         if (gamepad1.left_bumper) {
-            FR.setPower(-2);
-            BR.setPower(-2);
-            BL.setPower(-2);
-            FL.setPower(-2);
+            FR.setPower(-1);
+            BR.setPower(-1);
+            BL.setPower(-1);
+            FL.setPower(-1);
         } else {
             FR.setPower(0);
             BR.setPower(0);
@@ -77,13 +77,13 @@ public class teleop extends OpMode {
         }
         //Arm
         if (Math.abs(gamepad2.right_stick_y) > .2) {
-            arm.setPower(gamepad2.right_stick_y * -0.4);
-            arm2.setPower(gamepad2.right_stick_y * 0.4);
+            arm.setPower(gamepad2.right_stick_y * -0.3);
+            arm2.setPower(gamepad2.right_stick_y * 0.3);
         } else {
-            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
             arm2.setPower(0);
+            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         // Send telemetry message to indicate arm position
         telemetry.addData("Arm position at",  "%7d :%7d :%7d",
@@ -92,23 +92,18 @@ public class teleop extends OpMode {
                 lift.getCurrentPosition());
      //lift with limiter
         if (liftEncoders >= -13800) { //number = Raw Values
-            if (Math.abs(gamepad2.left_stick_y) >.2) {
-                lift.setPower(.5);
+            if (Math.abs(gamepad2.left_stick_y) > .2) {
+                lift.setPower(gamepad2.left_stick_y * .5);
             } else {
                 lift.setPower(0);
                 lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
         } else {
             lift.setPower(0);
+            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         } // end of limiter
         if (Math.abs(gamepad2.left_stick_y) > .2) {
-            lift.setPower(.5);
-        } else {
-            lift.setPower(0);
-            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-        if (Math.abs(gamepad2.left_stick_y) > .2) {
-            lift.setPower(.5);
+            lift.setPower(gamepad2.left_stick_y * -.5);
         } else {
             lift.setPower(0);
             lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -148,15 +143,15 @@ public class teleop extends OpMode {
             Srotate.setPower(1);
             Srotate2.setPower(-1);
         } else {
-            Srotate.setPower(0.0000);
-            Srotate2.setPower(-0.0000);
+            Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
         if (gamepad2.x) {
             Srotate.setPower(-1);
             Srotate2.setPower(1);
         } else {
-            Srotate.setPower(-0.0000);
-            Srotate2.setPower(0.0000);
+            Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
     }
 }
