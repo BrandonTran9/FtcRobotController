@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
 public class teleop extends OpMode {
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // No External Gearing.
+    static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 7.55906 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -37,7 +37,7 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
         int liftEncoders = (lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
-        liftEncoders = 0;
+        //liftEncoders = 0;
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);

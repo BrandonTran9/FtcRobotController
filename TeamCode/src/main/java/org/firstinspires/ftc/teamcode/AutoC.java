@@ -102,12 +102,12 @@ public class AutoC extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderarm(ARM_SPEED, 50,-50,5.0);
+        encoderarm(ARM_SPEED, 55,-55,5.0);
         encoderlift(LIFT_SPEED, 300,300,5.0);
         encoderDrive(DRIVE_SPEED,  -55,  55, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED,  -24,  -24, 5.0);
-        encoderDrive(DRIVE_SPEED,  -14,  14, 5.0);
-        encoderlift(LIFT_SPEED, -100,-100,5.0);
+        encoderDrive(DRIVE_SPEED,  -23,  -23, 5.0);
+        encoderDrive(DRIVE_SPEED,  -15,  15, 5.0);
+        encoderarm(ARM_SPEED, -10,10,5.0);
         // TEMPORARY COMMENT:encoderStrafe(DRIVE_SPEED, 20, 20, 5.0);  // S2: Strafe Left 12 Inches with 4 Sec timeout
         // TEMPORARY COMMENT:encoderDrive(DRIVE_SPEED, 5, 5, 5.0); // S3: Reverse 10 Inches with 5 Sec timeout
 
