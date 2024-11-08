@@ -95,7 +95,7 @@ public class teleop extends OpMode {
             if (Math.abs(gamepad2.left_stick_y) >.2) {
                 lift.setPower(.5);
             } else {
-                lift.setPower(0.5);
+                lift.setPower(0);
                 lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
         } else {
