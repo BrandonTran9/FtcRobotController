@@ -15,7 +15,7 @@ public class TeleOp_no_limiter extends OpMode {
 
 
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
-    CRServo SL, SR, Srotate;
+    CRServo SL, SR, Srotate, Srotate2;
 
     @Override
     public void init() {
@@ -30,6 +30,7 @@ public class TeleOp_no_limiter extends OpMode {
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
+        Srotate2eeee = hardwareMap.crservo.get("Srotate2");
     }
     @Override
     public void loop() {
@@ -122,13 +123,17 @@ public class TeleOp_no_limiter extends OpMode {
         //intake rotater
         if (gamepad2.dpad_right) {
             Srotate.setPower(1);
+            Srotate2.setPower(1);
         } else {
-            Srotate.setPower(0.0000001);
+            Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
         if (gamepad2.dpad_left) {
             Srotate.setPower(-1);
+            Srotate2.setPower(-1);
         } else {
-            Srotate.setPower(-0.0000001);
+            Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
     }
 }
