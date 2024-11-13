@@ -30,7 +30,7 @@ public class TeleOp_no_limiter extends OpMode {
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
-        Srotate2eeee = hardwareMap.crservo.get("Srotate2");
+        Srotate2 = hardwareMap.crservo.get("Srotate2");
     }
     @Override
     public void loop() {

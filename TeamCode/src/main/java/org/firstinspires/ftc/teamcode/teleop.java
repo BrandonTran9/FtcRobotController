@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class teleop extends OpMode {
     static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // No External Gearing.
-    static final double     WHEEL_DIAMETER_INCHES   = 4.09449 ;     // For figuring circumference
+    static final double     WHEEL_DIAMETER_INCHES   = 3.8825 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
@@ -43,8 +43,8 @@ public class teleop extends OpMode {
             FR.setPower(gamepad1.right_stick_y * 1);
             BR.setPower(gamepad1.right_stick_y * -1);
         } else {
-            BR.setPower(0);
             FR.setPower(0);
+            BR.setPower(0);
         }
         if (Math.abs(gamepad1.left_stick_y) > .2) {
             FL.setPower(gamepad1.left_stick_y * -1);
@@ -93,7 +93,8 @@ public class teleop extends OpMode {
      //lift with limiter
         if (liftEncoders >= -13800) { //number = Raw Values
             if (Math.abs(gamepad2.left_stick_y) > .2) {
-                lift.setPower(gamepad2.left_stick_y * .5);
+                lift.setPower(gamepad2.left_stick_y * 2);
+                lift.setPower(gamepad2.left_stick_y * -1);
             } else {
                 lift.setPower(0);
                 lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -101,13 +102,8 @@ public class teleop extends OpMode {
         } else {
             lift.setPower(0);
             lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        } // end of limiter
-        if (Math.abs(gamepad2.left_stick_y) > .2) {
-            lift.setPower(gamepad2.left_stick_y * -.5);
-        } else {
-            lift.setPower(0);
-            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+        // end of limiter
 
         telemetry.addData( "Lift position", "%7d",lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
         telemetry.update();
