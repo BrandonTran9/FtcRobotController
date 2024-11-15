@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class TestTeleOpCode extends OpMode {
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
-    CRServo SL, SR, Srotate;
+    CRServo SL, SR, Srotate, Srotate2;
 
     @Override
     public void init() {
@@ -23,6 +23,7 @@ public class TestTeleOpCode extends OpMode {
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
+        Srotate2 = hardwareMap.crservo.get("Srotate2");
     }
 
     @Override
@@ -114,13 +115,17 @@ public class TestTeleOpCode extends OpMode {
         //intake rotater
         if (gamepad2.dpad_left) {
             Srotate.setPower(1);
+            Srotate2.setPower(-1);
         } else {
             Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
         if (gamepad2.dpad_right) {
             Srotate.setPower(-1);
+            Srotate2.setPower(1);
         } else {
             Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
     }
 }
