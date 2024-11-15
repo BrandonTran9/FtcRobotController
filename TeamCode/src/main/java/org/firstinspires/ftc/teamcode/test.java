@@ -4,10 +4,20 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class test extends OpMode {
-    DcMotor FR, FL, BL, BR;
+    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // No External Gearing.
+    static final double     WHEEL_DIAMETER_INCHES   = 7.55906 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+
+
+    DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
+    CRServo SL, SR;
+    Servo Srotate, Srotate2;
 
     @Override
     public void init() {
@@ -15,7 +25,16 @@ public class test extends OpMode {
         BL = hardwareMap.dcMotor.get("BL");
         FR = hardwareMap.dcMotor.get("FR");
         FL = hardwareMap.dcMotor.get("FL");
+        arm = hardwareMap.dcMotor.get("arm");
+        arm2 = hardwareMap.dcMotor.get("arm2");
+        lift = hardwareMap.dcMotor.get("lift");
+        hang = hardwareMap.dcMotor.get("hang");
+        SL = hardwareMap.crservo.get("SL");
+        SR = hardwareMap.crservo.get("SR");
+        Srotate = hardwareMap.servo.get("Srotate");
+        Srotate2 = hardwareMap.servo.get("Srotate2");
     }
+
 
     @Override
     public void loop() {
@@ -55,6 +74,59 @@ public class test extends OpMode {
             BR.setPower(0);
             BL.setPower(0);
             FL.setPower(0);
+        }
+        //Arm
+        if (Math.abs(gamepad2.right_stick_y) > .2) {
+            arm.setPower(gamepad2.right_stick_y * -0.4);
+            arm2.setPower(gamepad2.right_stick_y * 0.4);
+        } else {
+            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm.setPower(0);
+            arm2.setPower(0);
+        }
+        if (gamepad2.a) {
+            lift.setPower(-1);
+        }
+        else if (gamepad2.y) {
+            lift.setPower(1);
+        } else {
+            lift.setPower(0);
+        }
+        //hang
+        if (gamepad1.dpad_up) {
+            hang.setPower(-1);
+        }else {
+            hang.setPower(0);
+        }
+        if (gamepad1.dpad_down) {
+            hang.setPower(1);
+        }else {
+            hang.setPower(0);
+        }
+        //intakes
+        if (gamepad2.dpad_up) {
+            SR.setPower(-1);
+            SL.setPower(1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
+        }
+        if (gamepad2.dpad_down) {
+            SR.setPower(1);
+            SL.setPower(-1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
+        }
+        //intake rotater
+        if (gamepad2.b) {
+            Srotate.setPosition(1);
+            Srotate2.setPosition(0);
+        }
+        if (gamepad2.x) {
+            Srotate.setPosition(.50);
+            Srotate2.setPosition(.50);
         }
     }
 }
