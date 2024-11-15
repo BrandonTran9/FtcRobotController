@@ -4,18 +4,20 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class TeleOp_no_limiter extends OpMode {
-    static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // No External Gearing.
-    static final double     WHEEL_DIAMETER_INCHES   = 7.55906 ;     // For figuring circumference
+    static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // No External Gearing.
+    static final double     WHEEL_DIAMETER_INCHES   = 3.8825 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
 
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
-    CRServo SL, SR, Srotate, Srotate2;
+    CRServo SL, SR;
+    Servo Srotate, Srotate2;
 
     @Override
     public void init() {
@@ -29,13 +31,13 @@ public class TeleOp_no_limiter extends OpMode {
         hang = hardwareMap.dcMotor.get("hang");
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
-        Srotate = hardwareMap.crservo.get("Srotate");
-        Srotate2 = hardwareMap.crservo.get("Srotate2");
+        Srotate = hardwareMap.servo.get("Srotate");
+        Srotate2 = hardwareMap.servo.get("Srotate2");
     }
+
+
     @Override
     public void loop() {
-
-        // liftEncoders = 0;
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
@@ -75,25 +77,22 @@ public class TeleOp_no_limiter extends OpMode {
         }
         //Arm
         if (Math.abs(gamepad2.right_stick_y) > .2) {
-            arm.setPower(gamepad2.right_stick_y * -0.4);
-            arm2.setPower(gamepad2.right_stick_y * 0.4);
+            arm.setPower(gamepad2.right_stick_y * -0.5);
+            arm2.setPower(gamepad2.right_stick_y * 0.5);
         } else {
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setPower(0);
             arm2.setPower(0);
         }
-        //lift without limiter
-            if (gamepad2.a) {
-                lift.setPower(1);
-            }
-            else if (gamepad2.y) {
-                lift.setPower(-1);
-            } else {
-                lift.setPower(0);
-            }
-        telemetry.addData( "Lift position", lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
-
+        if (gamepad2.y) {
+            lift.setPower(1);
+        } else if (gamepad2.a){
+            lift.setPower(-1);
+        }
+        else {
+            lift.setPower(0);
+        }
         //hang
         if (gamepad1.dpad_up) {
             hang.setPower(-1);
@@ -106,34 +105,28 @@ public class TeleOp_no_limiter extends OpMode {
             hang.setPower(0);
         }
         //intakes
-        if (gamepad2.dpad_up) {
-            SR.setPower(1);
-            SL.setPower(-1);
-        }else {
-            SR.setPower(0);
-            SL.setPower(0);
-        }
-        if (gamepad2.dpad_down) {
+        if (gamepad2.left_bumper) {
             SR.setPower(-1);
             SL.setPower(1);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
-        //intake rotater
-        if (gamepad2.dpad_right) {
-            Srotate.setPower(1);
-            Srotate2.setPower(1);
-        } else {
-            Srotate.setPower(0);
-            Srotate2.setPower(0);
+        if (gamepad2.right_bumper) {
+            SR.setPower(1);
+            SL.setPower(-1);
+        }else {
+            SR.setPower(0);
+            SL.setPower(0);
         }
-        if (gamepad2.dpad_left) {
-            Srotate.setPower(-1);
-            Srotate2.setPower(-1);
-        } else {
-            Srotate.setPower(0);
-            Srotate2.setPower(0);
+        //intake rotater
+        if (gamepad2.b) {
+            Srotate.setPosition(1);
+            Srotate2.setPosition(0);
+        }
+        if (gamepad2.x) {
+            Srotate.setPosition(.20);
+            Srotate2.setPosition(.20);
         }
     }
 }
