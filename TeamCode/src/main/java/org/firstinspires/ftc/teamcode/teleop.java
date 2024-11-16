@@ -107,24 +107,26 @@ public class teleop extends OpMode {
             /*arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
         }
-        // Send telemetry message to indicate arm position
-        telemetry.addData("Arm position at",  "%7d :%7d :%7d",
-                arm.getCurrentPosition(),
-                arm2.getCurrentPosition(),
-                lift.getCurrentPosition());
-     //lift with limiter
-        if (liftEncoders >= 4000) { //number = Raw Values
-            if (Math.abs(gamepad2.left_stick_y) > .2) {
-                lift.setPower(gamepad2.left_stick_y * 2);
-                lift.setPower(gamepad2.left_stick_y * -1);
+
+        //lift with limiter
+        if (gamepad2.y) { //number = Raw Values
+            if (liftEncoders <= 5000) {
+                lift.setPower(1);
             } else {
                 lift.setPower(0);
             }
+        } else if (gamepad2.a){
+            lift.setPower(-1);
         } else {
             lift.setPower(0);
         }
         // end of limiter
 
+        // Send telemetry message to indicate arm position
+        telemetry.addData("Arm position at",  "%7d :%7d :%7d",
+                arm.getCurrentPosition(),
+                arm2.getCurrentPosition(),
+                lift.getCurrentPosition());
         telemetry.addData( "Lift position", "%7d",lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
         telemetry.update();
 
