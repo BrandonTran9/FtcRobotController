@@ -110,7 +110,7 @@ public class teleop extends OpMode {
 
         //lift with limiter
         if (gamepad2.y) { //number = Raw Values
-            if (liftEncoders <= 5000) {
+            if (liftEncoders <= 3700) {
                 lift.setPower(1);
             } else {
                 lift.setPower(0);
@@ -123,10 +123,9 @@ public class teleop extends OpMode {
         // end of limiter
 
         // Send telemetry message to indicate arm position
-        telemetry.addData("Arm position at",  "%7d :%7d :%7d",
+        telemetry.addData("Arm position at",  "%7d :%7d",
                 arm.getCurrentPosition(),
-                arm2.getCurrentPosition(),
-                lift.getCurrentPosition());
+                arm2.getCurrentPosition());
         telemetry.addData( "Lift position", "%7d",lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
         telemetry.update();
 
