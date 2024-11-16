@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
 public class teleop extends OpMode {
@@ -31,12 +32,33 @@ public class teleop extends OpMode {
         SR = hardwareMap.crservo.get("SR");
         Srotate = hardwareMap.crservo.get("Srotate");
         Srotate2 = hardwareMap.crservo.get("Srotate2");
+
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        FR.setDirection(DcMotor.Direction.FORWARD);
+        FL.setDirection(DcMotor.Direction.FORWARD);
+        BR.setDirection(DcMotor.Direction.FORWARD);
+        BL.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
+        arm2.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.FORWARD);
+        hang.setDirection(DcMotor.Direction.FORWARD);
+        SL.setDirection(DcMotor.Direction.FORWARD);
+        SR.setDirection(DcMotor.Direction.FORWARD);
+        Srotate.setDirection(DcMotor.Direction.FORWARD);
+        Srotate2.setDirection(DcMotor.Direction.FORWARD);
     }
 
 
     @Override
     public void loop() {
         int liftEncoders = (lift.getCurrentPosition() + (int)(COUNTS_PER_INCH));
+        double speed = gamepad2.right_trigger - gamepad2.left_trigger;
+        SR.setPower(speed);
+        SL.setPower(speed);
         //liftEncoders = 0;
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
@@ -77,13 +99,13 @@ public class teleop extends OpMode {
         }
         //Arm
         if (Math.abs(gamepad2.right_stick_y) > .2) {
-            arm.setPower(gamepad2.right_stick_y * -0.3);
-            arm2.setPower(gamepad2.right_stick_y * 0.3);
+            arm.setPower(gamepad2.right_stick_y * -0.5);
+            arm2.setPower(gamepad2.right_stick_y * 0.5);
         } else {
             arm.setPower(0);
             arm2.setPower(0);
-            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            /*arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
         }
         // Send telemetry message to indicate arm position
         telemetry.addData("Arm position at",  "%7d :%7d :%7d",
@@ -91,17 +113,15 @@ public class teleop extends OpMode {
                 arm2.getCurrentPosition(),
                 lift.getCurrentPosition());
      //lift with limiter
-        if (liftEncoders >= -13800) { //number = Raw Values
+        if (liftEncoders >= 4000) { //number = Raw Values
             if (Math.abs(gamepad2.left_stick_y) > .2) {
                 lift.setPower(gamepad2.left_stick_y * 2);
                 lift.setPower(gamepad2.left_stick_y * -1);
             } else {
                 lift.setPower(0);
-                lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
         } else {
             lift.setPower(0);
-            lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         // end of limiter
 
@@ -120,29 +140,29 @@ public class teleop extends OpMode {
             hang.setPower(0);
         }
         //intakes
-        if (gamepad2.dpad_up) {
-            SR.setPower(-1);
-            SL.setPower(1);
+        if (Math.abs(gamepad2.right_trigger) > .2) {
+            SR.setDirection(DcMotorSimple.Direction.FORWARD);
+            SL.setDirection(DcMotorSimple.Direction.REVERSE);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
-        if (gamepad2.dpad_down) {
-            SR.setPower(1);
-            SL.setPower(-1);
+        if (Math.abs(gamepad2.left_trigger) > 2) {
+            SR.setDirection(DcMotorSimple.Direction.REVERSE);
+            SL.setDirection(DcMotorSimple.Direction.FORWARD);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
         //intake rotater
-        if (gamepad2.b) {
+        if (gamepad2.left_bumper) {
             Srotate.setPower(1);
             Srotate2.setPower(-1);
-        } else {
+        } else {;
             Srotate.setPower(0);
             Srotate2.setPower(0);
         }
-        if (gamepad2.x) {
+        if (gamepad2.right_bumper) {
             Srotate.setPower(-1);
             Srotate2.setPower(1);
         } else {

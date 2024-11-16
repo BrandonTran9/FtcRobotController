@@ -120,6 +120,11 @@ public class TeleOp_no_limiter extends OpMode {
         else {
             lift.setPower(0);
         }
+        // Send telemetry message to indicate arm position
+        telemetry.addData("Arm position at",  "%7d :%7d :%7d",
+                arm.getCurrentPosition(),
+                arm2.getCurrentPosition(),
+                lift.getCurrentPosition());
         //hang
         if (gamepad1.dpad_up) {
             hang.setPower(-1);
