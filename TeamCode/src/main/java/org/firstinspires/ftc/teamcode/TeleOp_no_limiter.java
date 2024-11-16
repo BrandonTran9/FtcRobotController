@@ -4,20 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class TeleOp_no_limiter extends OpMode {
-    static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: TETRIX Motor Encoder
+    /*static final double     COUNTS_PER_MOTOR_REV    = 435 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 3.8825 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-
+            (WHEEL_DIAMETER_INCHES * 3.1415);*/
 
     DcMotor arm, lift, FR, FL, BL, BR,arm2,hang;
-    CRServo SL, SR;
-    Servo Srotate, Srotate2;
+    CRServo SL, SR, Srotate, Srotate2;
 
     @Override
     public void init() {
@@ -31,13 +30,41 @@ public class TeleOp_no_limiter extends OpMode {
         hang = hardwareMap.dcMotor.get("hang");
         SL = hardwareMap.crservo.get("SL");
         SR = hardwareMap.crservo.get("SR");
-        Srotate = hardwareMap.servo.get("Srotate");
-        Srotate2 = hardwareMap.servo.get("Srotate2");
-    }
+        Srotate = hardwareMap.crservo.get("Srotate");
+        Srotate2 = hardwareMap.crservo.get("Srotate2");
 
+        /*FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        SL.setPower(0);
+        SR.setPower(0);
+        Srotate.setPower(0);
+        Srotate2.setPower(0);
+
+        FR.setDirection(DcMotor.Direction.FORWARD);
+        FL.setDirection(DcMotor.Direction.FORWARD);
+        BR.setDirection(DcMotor.Direction.FORWARD);
+        BL.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
+        arm2.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.FORWARD);
+        hang.setDirection(DcMotor.Direction.FORWARD);
+        SL.setDirection(DcMotor.Direction.FORWARD);
+        SR.setDirection(DcMotor.Direction.FORWARD);
+        Srotate.setDirection(DcMotor.Direction.FORWARD);
+        Srotate2.setDirection(DcMotor.Direction.FORWARD);
+    }
 
     @Override
     public void loop() {
+        double speed = gamepad2.right_trigger - gamepad2.left_trigger;
+        SR.setPower(speed);
+        SL.setPower(speed);
         //Base movements
         if (Math.abs(gamepad1.right_stick_y) > .2) {
             FR.setPower(gamepad1.right_stick_y * 1);
@@ -80,8 +107,8 @@ public class TeleOp_no_limiter extends OpMode {
             arm.setPower(gamepad2.right_stick_y * -0.5);
             arm2.setPower(gamepad2.right_stick_y * 0.5);
         } else {
-            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            /*arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
             arm.setPower(0);
             arm2.setPower(0);
         }
@@ -105,28 +132,34 @@ public class TeleOp_no_limiter extends OpMode {
             hang.setPower(0);
         }
         //intakes
-        if (gamepad2.left_bumper) {
-            SR.setPower(-1);
-            SL.setPower(1);
+        if (Math.abs(gamepad2.right_trigger) > .2) {
+            SR.setDirection(DcMotorSimple.Direction.FORWARD);
+            SL.setDirection(DcMotorSimple.Direction.REVERSE);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
-        if (gamepad2.right_bumper) {
-            SR.setPower(1);
-            SL.setPower(-1);
+        if (Math.abs(gamepad2.left_trigger) > 2) {
+            SR.setDirection(DcMotorSimple.Direction.REVERSE);
+            SL.setDirection(DcMotorSimple.Direction.FORWARD);
         }else {
             SR.setPower(0);
             SL.setPower(0);
         }
         //intake rotater
-        if (gamepad2.b) {
-            Srotate.setPosition(1);
-            Srotate2.setPosition(0);
+        if (gamepad2.left_bumper) {
+            Srotate.setPower(1);
+            Srotate2.setPower(-1);
+        } else {;
+            Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
-        if (gamepad2.x) {
-            Srotate.setPosition(.20);
-            Srotate2.setPosition(.20);
+        if (gamepad2.right_bumper) {
+            Srotate.setPower(-1);
+            Srotate2.setPower(1);
+        } else {
+            Srotate.setPower(0);
+            Srotate2.setPower(0);
         }
     }
 }
