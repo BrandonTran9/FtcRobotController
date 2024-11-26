@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 public class RedTele extends OpMode {
@@ -28,7 +29,10 @@ public class RedTele extends OpMode {
         BR.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.FORWARD);
         lift2.setDirection(DcMotor.Direction.FORWARD);
-        lift1.setDirection(DcMotor.Direction.FORWARD);
+        lift1.setDirection(DcMotor.Direction.REVERSE);
+
+        lift1.getCurrentPosition();
+        lift2.getCurrentPosition();
     }
 
 
@@ -77,30 +81,30 @@ public class RedTele extends OpMode {
             lift2.setPower(gamepad2.left_stick_y *1);;
         } else {
             lift1.setPower(0);
-            lift1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+           // lift1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             lift2.setPower(0);
-            lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+          //  lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-        if (gamepad2.a) {
+        if (gamepad2.dpad_up) {
            slide1.setPosition(.6);// down positions
             slide2.setPosition(.3); // opposite of 1 and .1 off
             Srotate.setPosition(.975);
         }
-        if (gamepad2.y) {
+        if (gamepad2.dpad_down) {
           slide1.setPosition(0); // up positions
             slide2.setPosition(1);
             Srotate.setPosition(.25);
         }
-        if (gamepad2.x) {
+        if (gamepad2.b) {
             claw.setPosition(.25); // grab
         }
-        if (gamepad2.b) {
+        if (gamepad2.a) {
             claw.setPosition(0); //open
         }
-        if (gamepad2.dpad_left) {
+        if (gamepad2.x) {
             intake.setPosition(.75);
         }
-        if (gamepad2.dpad_right) {
+        if (gamepad2.y) {
             intake.setPosition(.5);
         }
     }
