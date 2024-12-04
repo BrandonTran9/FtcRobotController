@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous
-public class AutoA extends LinearOpMode {
+public class autoFoward extends LinearOpMode {
     DcMotor FR, FL, BL, BR, lift, arm, arm2, hang;
     CRServo SL, SR, Srotate;
     @Override

@@ -19,7 +19,8 @@ public class AutoC extends LinearOpMode {
     private DcMotor BR = null;
     private DcMotor arm = null;
     private DcMotor arm2 = null;
-    private DcMotor lift = null;
+    private DcMotor lift1 = null;
+    private DcMotor lift2 = null;
     private final ElapsedTime runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
@@ -49,7 +50,8 @@ public class AutoC extends LinearOpMode {
         BL = hardwareMap.get(DcMotor.class, "BL");
         arm = hardwareMap.get(DcMotor.class, "arm");
         arm2 = hardwareMap.get(DcMotor.class, "arm2");
-        lift = hardwareMap.get(DcMotor.class, "lift");
+        lift1 = hardwareMap.get(DcMotor.class, "lift1");
+        lift2 = hardwareMap.get(DcMotor.class, "lift2");
 
         //TEST
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -58,7 +60,8 @@ public class AutoC extends LinearOpMode {
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -69,7 +72,8 @@ public class AutoC extends LinearOpMode {
         BL.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.FORWARD);
         arm2.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotor.Direction.FORWARD);
+        lift1.setDirection(DcMotor.Direction.FORWARD);
+        lift2.setDirection(DcMotor.Direction.FORWARD);
 
         FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -77,7 +81,8 @@ public class AutoC extends LinearOpMode {
         BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -85,7 +90,8 @@ public class AutoC extends LinearOpMode {
         BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d :%7d :%7d",
@@ -95,7 +101,8 @@ public class AutoC extends LinearOpMode {
                 BL.getCurrentPosition(),
                 arm.getCurrentPosition(),
                 arm2.getCurrentPosition(),
-                lift.getCurrentPosition());
+                lift1.getCurrentPosition(),
+                lift2.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
