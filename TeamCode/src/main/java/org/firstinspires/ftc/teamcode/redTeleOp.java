@@ -94,7 +94,7 @@ public class redTeleOp extends OpMode {
         if (gamepad2.dpad_down) {
             slide1.setPosition(0); // up positions
             slide2.setPosition(1);
-            Srotate.setPosition(.4);
+            Srotate.setPosition(.37);
         }
         if (gamepad2.a) {
             claw.setPosition(.3); // grab
