@@ -4,20 +4,21 @@ import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="AutoB", group="Robot")
 public class AutoB extends LinearOpMode {
 
-
     /* Declare OpMode members. */
-    private DcMotor FR, FL, BL, BR, lift1, lift2 = null;
-    private Servo Srotate, slide1, slide2, claw, bucket, intake = null;
-
+    private DcMotor FR = null;
+    private DcMotor FL = null;
+    private DcMotor BL = null;
+    private DcMotor BR = null;
+    private DcMotor arm = null;
+    private DcMotor arm2 = null;
+    private DcMotor lift1 = null;
+    private DcMotor lift2 = null;
     private final ElapsedTime runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
@@ -35,6 +36,7 @@ public class AutoB extends LinearOpMode {
 
     static final double     ARM_SPEED             = 0.5;
     static final double     LIFT_SPEED             = 0.5;
+    static final double     TURN_SPEED              = 0.5;
 
     @Override
     public void runOpMode() {
@@ -44,20 +46,18 @@ public class AutoB extends LinearOpMode {
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
+        arm = hardwareMap.get(DcMotor.class, "arm");
+        arm2 = hardwareMap.get(DcMotor.class, "arm2");
         lift1 = hardwareMap.get(DcMotor.class, "lift1");
         lift2 = hardwareMap.get(DcMotor.class, "lift2");
-        Srotate = hardwareMap.get(Servo.class, "Srotate");
-        slide1 = hardwareMap.get(Servo.class, "slide1");
-        slide2 = hardwareMap.get(Servo.class, "slide2");
-        claw = hardwareMap.get(Servo.class, "claw");
-        bucket = hardwareMap.get(Servo.class, "bucket");
-        intake = hardwareMap.get(Servo.class, "intake");
 
         //TEST
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -68,6 +68,8 @@ public class AutoB extends LinearOpMode {
         FL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.FORWARD);
         BL.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.FORWARD);
+        arm2.setDirection(DcMotor.Direction.FORWARD);
         lift1.setDirection(DcMotor.Direction.FORWARD);
         lift2.setDirection(DcMotor.Direction.FORWARD);
 
@@ -75,6 +77,8 @@ public class AutoB extends LinearOpMode {
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -82,6 +86,8 @@ public class AutoB extends LinearOpMode {
         FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -91,6 +97,8 @@ public class AutoB extends LinearOpMode {
                 FL.getCurrentPosition(),
                 BR.getCurrentPosition(),
                 BL.getCurrentPosition(),
+                arm.getCurrentPosition(),
+                arm2.getCurrentPosition(),
                 lift1.getCurrentPosition(),
                 lift2.getCurrentPosition());
         telemetry.update();
