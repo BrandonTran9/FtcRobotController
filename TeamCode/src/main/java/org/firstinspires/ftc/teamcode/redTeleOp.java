@@ -32,6 +32,11 @@ public class redTeleOp extends OpMode {
         lift2.setDirection(DcMotor.Direction.FORWARD);
         lift1.setDirection(DcMotor.Direction.REVERSE);
 
+        FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         lift1.getCurrentPosition();
         lift2.getCurrentPosition();
     }
