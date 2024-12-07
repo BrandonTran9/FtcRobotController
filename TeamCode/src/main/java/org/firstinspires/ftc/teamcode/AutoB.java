@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import static java.lang.Thread.sleep;
+//import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -195,7 +195,7 @@ public class AutoB extends LinearOpMode {
         }
     }
     //Arm encoders
-    public void encoderarm(double speed, double fowardInches, double reverseInches, double timeoutS) {
+    /*public void encoderarm(double speed, double fowardInches, double reverseInches, double timeoutS) {
         int newarmTarget;
         int newarm2Target;
 
@@ -354,3 +354,4 @@ public class AutoB extends LinearOpMode {
     //private boolean opModeIsActive() {
     //}
 }
+     */
