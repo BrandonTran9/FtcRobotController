@@ -8,17 +8,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="AutoB", group="Robot")
-public class AutoB extends LinearOpMode {
+public class AutoA extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor FR = null;
     private DcMotor FL = null;
     private DcMotor BL = null;
     private DcMotor BR = null;
-    private DcMotor arm = null;
-    private DcMotor arm2 = null;
-    private DcMotor lift1 = null;
-    private DcMotor lift2 = null;
+
+    // private DcMotor lift1 = null;
+    // private DcMotor lift2 = null;
+
     private final ElapsedTime runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
@@ -27,16 +27,16 @@ public class AutoB extends LinearOpMode {
     // For example, use a value of 2.0 for a 12-tooth spur gear driving a 24-tooth spur gear.
     // This is gearing DOWN for less speed and more torque.
     // For gearing UP, use a gear ratio less than 1.0. Note this will affect the direction of wheel rotation.
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // No External Gearing.
-    static final double     WHEEL_DIAMETER_INCHES   = 7.55906 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double COUNTS_PER_MOTOR_REV = 1440;    // eg: TETRIX Motor Encoder
+    static final double DRIVE_GEAR_REDUCTION = 0.5;     // No External Gearing.
+    static final double WHEEL_DIAMETER_INCHES = 7.55906;     // For figuring circumference
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.5;
+    static final double DRIVE_SPEED = 0.5;
 
-    static final double     ARM_SPEED             = 0.5;
-    static final double     LIFT_SPEED             = 0.5;
-    static final double     TURN_SPEED              = 0.5;
+    static final double ARM_SPEED = 0.5;
+    static final double LIFT_SPEED = 0.5;
+    static final double TURN_SPEED = 0.5;
 
     @Override
     public void runOpMode() {
@@ -46,20 +46,20 @@ public class AutoB extends LinearOpMode {
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
-        arm = hardwareMap.get(DcMotor.class, "arm");
-        arm2 = hardwareMap.get(DcMotor.class, "arm2");
+        /*
         lift1 = hardwareMap.get(DcMotor.class, "lift1");
         lift2 = hardwareMap.get(DcMotor.class, "lift2");
+         */
 
         //TEST
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        /*
         lift1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+         */
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -68,39 +68,39 @@ public class AutoB extends LinearOpMode {
         FL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.FORWARD);
         BL.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotor.Direction.FORWARD);
-        arm2.setDirection(DcMotor.Direction.FORWARD);
+        /*
         lift1.setDirection(DcMotor.Direction.FORWARD);
         lift2.setDirection(DcMotor.Direction.FORWARD);
+         */
 
         FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        /*
         lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        */
 
         FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        /*
         lift1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+         */
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Starting at",  "%7d :%7d :%7d :%7d :%7d :%7d",
+        telemetry.addData("Starting at", "%7d :%7d :%7d :%7d :%7d :%7d",
                 FR.getCurrentPosition(),
                 FL.getCurrentPosition(),
                 BR.getCurrentPosition(),
                 BL.getCurrentPosition(),
-                arm.getCurrentPosition(),
-                arm2.getCurrentPosition(),
+                /*
                 lift1.getCurrentPosition(),
                 lift2.getCurrentPosition());
+                 */
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -108,12 +108,12 @@ public class AutoB extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderarm(ARM_SPEED, 55,-55,5.0);
-        encoderlift(LIFT_SPEED, 90,90,5.0);
-        encoderDrive(DRIVE_SPEED,  -50,  50, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED,  -23,  -23, 5.0);
-        encoderDrive(DRIVE_SPEED,  -15,  15, 5.0);
-        encoderarm(ARM_SPEED, -10,10,5.0);
+        //encoderarm(ARM_SPEED, 55, -55, 5.0);
+        //encoderlift(LIFT_SPEED, 90, 90, 5.0);
+        encoderDrive(DRIVE_SPEED, -50, 50, 5.0);  // S1: Forward 12 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, -23, -23, 5.0);
+        encoderDrive(DRIVE_SPEED, -15, 15, 5.0);
+        //encoderarm(ARM_SPEED, -10, 10, 5.0);
         // TEMPORARY COMMENT:encoderStrafe(DRIVE_SPEED, 20, 20, 5.0);  // S2: Strafe Left 12 Inches with 4 Sec timeout
         // TEMPORARY COMMENT:encoderDrive(DRIVE_SPEED, 5, 5, 5.0); // S3: Reverse 10 Inches with 5 Sec timeout
 
@@ -140,10 +140,10 @@ public class AutoB extends LinearOpMode {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
             // Determine new target position, and pass to motor controller
-            newFRTarget = FR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newFLTarget = FL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newBRTarget = BR.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newBLTarget = BL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newFRTarget = FR.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newFLTarget = FL.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newBRTarget = BR.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newBLTarget = BL.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
             FR.setTargetPosition(newFRTarget);
             FL.setTargetPosition(newFLTarget);
             BR.setTargetPosition(newBRTarget);
@@ -173,8 +173,8 @@ public class AutoB extends LinearOpMode {
                     (FL.isBusy() && BL.isBusy() && BR.isBusy() && FR.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newFLTarget,  newFRTarget, newBLTarget, newBRTarget);
-                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d", newFLTarget, newFRTarget, newBLTarget, newBRTarget,
+                telemetry.addData("Running to", " %7d :%7d :%7d :%7d", newFLTarget, newFRTarget, newBLTarget, newBRTarget);
+                telemetry.addData("Currently at", " at %7d :%7d :%7d :%7d", newFLTarget, newFRTarget, newBLTarget, newBRTarget,
                         FL.getCurrentPosition(), FR.getCurrentPosition(), BL.getCurrentPosition(), BR.getCurrentPosition());
                 telemetry.update();
             }
@@ -194,6 +194,7 @@ public class AutoB extends LinearOpMode {
             sleep(250);   // optional pause after each move.
         }
     }
+}
     //Arm encoders
     /*public void encoderarm(double speed, double fowardInches, double reverseInches, double timeoutS) {
         int newarmTarget;
