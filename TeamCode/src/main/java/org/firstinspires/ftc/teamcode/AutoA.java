@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="AutoB", group="Robot")
+@Autonomous(name="AutoA", group="Robot")
 public class AutoA extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -97,11 +97,7 @@ public class AutoA extends LinearOpMode {
                 FL.getCurrentPosition(),
                 BR.getCurrentPosition(),
                 BL.getCurrentPosition(),
-                /*
-                lift1.getCurrentPosition(),
-                lift2.getCurrentPosition());
-                 */
-        telemetry.update();
+                telemetry.update());
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -195,7 +191,7 @@ public class AutoA extends LinearOpMode {
         }
     }
 }
-    //Arm encoders
+//Arm encoders
     /*public void encoderarm(double speed, double fowardInches, double reverseInches, double timeoutS) {
         int newarmTarget;
         int newarm2Target;
